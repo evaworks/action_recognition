@@ -1,0 +1,96 @@
+# 动作识别配置文件
+# 动作顺序即为优先级，越靠前优先级越高
+
+actions:
+  # 动作1: 站姿防护（双手举起护头）- 最高优先级
+  stand_guard:
+    name: "站姿防护"
+    trigger_cmd: "STAND_GUARD"
+    description: "站立姿势双手举起防护头部"
+    conditions:
+      - type: "position"
+        keypoint: "right_wrist"
+        relation: "above"
+        target: "nose"
+        threshold: 0
+      - type: "position"
+        keypoint: "left_wrist"
+        relation: "above"
+        target: "nose"
+        threshold: 0
+    duration: 0.0
+    cooldown: 1.0
+
+  # 动作2: 举起双手
+  raise_both_hands:
+    name: "举起双手"
+    trigger_cmd: "RAISE_BOTH_HANDS"
+    description: "双手同时举起高于肩膀"
+    conditions:
+      - type: "position"
+        keypoint: "right_wrist"
+        relation: "above"
+        target: "right_shoulder"
+        threshold: -50
+      - type: "position"
+        keypoint: "left_wrist"
+        relation: "above"
+        target: "left_shoulder"
+        threshold: -50
+    duration: 0.0
+    cooldown: 1.0
+
+  # 动作3: 下蹲防护
+  squat_guard:
+    name: "下蹲防护"
+    trigger_cmd: "SQUAT_GUARD"
+    description: "蹲下姿势"
+    conditions:
+      - type: "angle"
+        keypoint: "left_knee"
+        angle: "<"
+        threshold: 120
+    duration: 0.0
+    cooldown: 1.0
+
+  # 动作4: 倒地防护
+  fall_guard:
+    name: "倒地防护"
+    trigger_cmd: "FALL_GUARD"
+    description: "身体接近水平倒下"
+    conditions:
+      - type: "position"
+        keypoint: "hip_center"
+        relation: "above"
+        target: "shoulder_center"
+        threshold: 0
+    duration: 0.0
+    cooldown: 1.0
+
+  # 动作5: 举起右手
+  raise_right_hand:
+    name: "举起右手"
+    trigger_cmd: "RAISE_RIGHT_HAND"
+    description: "右手腕高于右肩膀"
+    conditions:
+      - type: "position"
+        keypoint: "right_wrist"
+        relation: "above"
+        target: "right_shoulder"
+        threshold: -30
+    duration: 0.0
+    cooldown: 1.0
+
+  # 动作6: 举起左手
+  raise_left_hand:
+    name: "举起左手"
+    trigger_cmd: "RAISE_LEFT_HAND"
+    description: "左手腕高于左肩膀"
+    conditions:
+      - type: "position"
+        keypoint: "left_wrist"
+        relation: "above"
+        target: "left_shoulder"
+        threshold: -30
+    duration: 0.0
+    cooldown: 1.0

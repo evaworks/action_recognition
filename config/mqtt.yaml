@@ -1,0 +1,32 @@
+# MQTT配置文件
+
+mqtt:
+  # MQTT服务器配置
+  broker: "192.168.0.89"
+  port: 1883
+  username: ""      # 用户名（可选）
+  password: ""      # 密码（可选）
+  client_id: "action_recognition"
+  qos: 1
+  
+  # 重连配置
+  reconnect:
+    enabled: true
+    interval: 5     # 重连间隔（秒）
+    max_retries: 10 # 最大重连次数，-1表示无限重连
+  
+  # 心跳配置
+  heartbeat:
+    enabled: true
+    interval: 30    # 心跳间隔（秒）
+  
+  # 统一消息Topic（动作、心跳、响应都用这个）
+  response:
+    topic: "action/{device_id}/response"
+  
+  # 配置命令Topic（设备订阅）
+  config_topic: "action/config"
+  
+  # 设备配置（使用设备SN）
+  device:
+    device_id: "SN123456789"

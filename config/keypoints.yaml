@@ -1,0 +1,58 @@
+# 关键点映射配置
+# YOLOv11-Pose 使用 COCO 17关键点格式
+
+keypoints:
+  # 索引对应 YOLOv11-Pose 的17个关键点
+  nose: 0
+  left_eye: 1
+  right_eye: 2
+  left_ear: 3
+  right_ear: 4
+  left_shoulder: 5
+  right_shoulder: 6
+  left_elbow: 7
+  right_elbow: 8
+  left_wrist: 9
+  right_wrist: 10
+  left_hip: 11
+  right_hip: 12
+  left_knee: 13
+  right_knee: 14
+  left_ankle: 15
+  right_ankle: 16
+
+# 复合关键点（由多个基础关键点计算得出）
+composite_keypoints:
+  # 肩膀中心
+  shoulder_center:
+    - left_shoulder
+    - right_shoulder
+    - center
+  
+  # 臀部中心
+  hip_center:
+    - left_hip
+    - right_hip
+    - center
+  
+  # 左手中心
+  left_hand:
+    - left_wrist
+    - left_elbow
+    - center
+  
+  # 右手中心
+  right_hand:
+    - right_wrist
+    - right_elbow
+    - center
+
+# 参考关键点配置（用于计算比例等）
+reference_keypoints:
+  standing_hip:
+    keypoint: "hip_center"
+    default_ratio: 1.0
+  
+  standing_shoulder:
+    keypoint: "shoulder_center"
+    default_ratio: 1.0
