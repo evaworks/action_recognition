@@ -18,6 +18,8 @@ def main():
                        help='摄像头索引，默认为0')
     parser.add_argument('--debug', action='store_true',
                        help='显示调试信息')
+    parser.add_argument('--hidden', action='store_true',
+                       help='隐藏窗口后台运行')
     
     args = parser.parse_args()
     
@@ -43,7 +45,7 @@ def main():
     )
     
     try:
-        pose_camera.run(camera_index=args.camera, debug=args.debug)
+        pose_camera.run(camera_index=args.camera, debug=args.debug, hidden=args.hidden)
     except KeyboardInterrupt:
         print("\n\n用户中断程序")
     except Exception as e:

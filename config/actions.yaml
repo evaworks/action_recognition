@@ -21,7 +21,30 @@ actions:
     duration: 0.0
     cooldown: 1.0
 
-  # 动作2: 举起双手
+  # 动作2: 倒地防护（深蹲双手抱头）
+  fall_guard:
+    name: "倒地防护"
+    trigger_cmd: "FALL_GUARD"
+    description: "深蹲下双手抱头"
+    conditions:
+      - type: "angle"
+        keypoint: "left_knee"
+        angle: "<"
+        threshold: 120
+      - type: "position"
+        keypoint: "right_wrist"
+        relation: "above"
+        target: "nose"
+        threshold: -30
+      - type: "position"
+        keypoint: "left_wrist"
+        relation: "above"
+        target: "nose"
+        threshold: -30
+    duration: 0.0
+    cooldown: 1.0
+
+  # 动作3: 举起双手
   raise_both_hands:
     name: "举起双手"
     trigger_cmd: "RAISE_BOTH_HANDS"
@@ -50,20 +73,6 @@ actions:
         keypoint: "left_knee"
         angle: "<"
         threshold: 120
-    duration: 0.0
-    cooldown: 1.0
-
-  # 动作4: 倒地防护
-  fall_guard:
-    name: "倒地防护"
-    trigger_cmd: "FALL_GUARD"
-    description: "身体接近水平倒下"
-    conditions:
-      - type: "position"
-        keypoint: "hip_center"
-        relation: "above"
-        target: "shoulder_center"
-        threshold: 0
     duration: 0.0
     cooldown: 1.0
 

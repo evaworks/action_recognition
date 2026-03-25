@@ -49,9 +49,16 @@ class PoseCamera:
             
         import torch
         
-        device = 'mps' if torch.backends.mps.is_available() else 'cpu'
+        if torch.cuda.is_available():
+            device = 'cuda'
+        elif torch.backends.mps.is_available():
+            device = 'mps'
+        else:
+            device = 'cpu'
+        
+        device_name = 'CUDA' if device == 'cuda' else 'Apple GPU' if device == 'mps' else 'CPU'
         print(f"加载模型: {self.model_path}")
-        print(f"使用设备: {device} {'(Apple GPU)' if device == 'mps' else ''}")
+        print(f"使用设备: {device} ({device_name})")
         self.model = YOLO(self.model_path)
         self.model.to(device)
         print("模型加载完成")
@@ -329,7 +336,7 @@ class PoseCamera:
                     
         return annotated
     
-    def run(self, camera_index: int = 0, debug: bool = False) -> None:
+    def run(self, camera_index: int = 0, debug: bool = False, hidden: bool = False) -> None:
         """运行主循环"""
         if not self.open_camera(camera_index):
             return
@@ -337,13 +344,17 @@ class PoseCamera:
         print("\n开始姿态识别... 按 'q' 退出")
         print("="*50)
         
+        if hidden:
+            import win32gui
+            import win32con
+        
         while True:
             ret, frame = self.cap.read()
             
             if not ret:
                 print("无法读取帧")
                 break
-                
+            
             self.frame_count += 1
             
             if self.frame_count % 30 == 0:
@@ -362,11 +373,16 @@ class PoseCamera:
                            (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 
                            1, (0, 0, 255), 2)
             
+            if hidden:
+                hwnd = win32gui.FindWindow(None, 'Pose Recognition')
+                if hwnd:
+                    win32gui.ShowWindow(hwnd, win32con.SW_HIDE)
+            
             cv2.imshow('Pose Recognition', annotated_frame)
             
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
-                
+            
         self.release()
         
     def release(self) -> None:

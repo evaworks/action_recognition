@@ -127,6 +127,14 @@ class ConditionEngine:
             angle = self.keypoint_parser.calculate_angle(
                 keypoints, 'right_shoulder', 'right_elbow', 'right_wrist'
             )
+        elif keypoint == 'left_hip':
+            angle = self.keypoint_parser.calculate_angle(
+                keypoints, 'left_shoulder', 'left_hip', 'left_knee'
+            )
+        elif keypoint == 'right_hip':
+            angle = self.keypoint_parser.calculate_angle(
+                keypoints, 'right_shoulder', 'right_hip', 'right_knee'
+            )
         else:
             return False
         
